@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Página Principal{% endblock %}
+{% block content %}
+	<br/>
+	<br/>
+	<h1>Bienvenidos a la página web de </h1>
+	<h1>{{nombre}}</h1>
+	<br/>
+	<br/>
+	<p>Enlaces:</p>
+	<br/>
+	<p>Cálculo de potencias a través de la url -> /potencia/base/exponente</p>
+	<a href="/pag_ej_potencias" >Ejemplos cálculo de potencias.</a>
+	<p>-------------------------------------------------------------------</p>
+	<p>Cuenta letras a través de la url -> /cuenta/palabra/letra</p>
+	<a href="/pag_ej_calcletras" >Ejemplos de contador de letras en una palabra.</a>
+	<br/>
+{% endblock %}
