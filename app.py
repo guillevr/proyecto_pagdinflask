@@ -14,12 +14,31 @@ def inicio():
 ## Redireccion a la pagina donde se muestran los ejemplos de los calculos de potencias.
 @app.route('/pag_ej_potencias')
 def pag_ej_potencias():
-	return render_template("pag_ej_potencias.html")
+	return render_template("template2.html")
 
 ## Redireccion a la pagina donde se muestran los ejemplos de calcular las letras de una palabra.
 @app.route('/pag_ej_calcletras')
 def pag_ej_calcletras():
-	return render_template("pag_ej_calcletras.html")
+	return render_template("template4.html")
+
+## Redireccion a la pagina donde se muestran los ejemplos de los libros.
+@app.route('/pag_ej_bus_libro')
+def pag_ej_buscalibros():
+		
+	#################################
+	##		Lista de los libros
+	#################################
+	libros=[]
+	for libro in doc.xpath('//libro'):
+		autor=libro.xpath('./autor/text()')[0]
+		titulo=libro.xpath('./titulo/text()')[0]
+		codigo=libro.xpath('./codigo/text()')[0]
+		dic={"codigo":codigo,"titulo":titulo,"autor":autor}
+		libros.append(dic)
+
+	#####################################
+	
+	return render_template("template6.html",lista_libros=libros)
 
 ## Calcula la potencia escrita en la (URL).
 @app.route('/potencia/<int:base>/<exponente>')
@@ -29,14 +48,14 @@ def calculo_potencias(base,exponente):
 
 	if exponente < 0:
 		resultado= 1 / base ** abs(exponente)
-		return render_template("pag_calc_potencia.html",bas=base,expo=abs(exponente),res=resultado)
+		return render_template("template1.html",bas=base,expo=abs(exponente),res=resultado)
 
 	elif exponente == 0:
-		return render_template("pag_calc_potencia.html",bas=base,expo=exponente,res=1)
+		return render_template("template1.html",bas=base,expo=exponente,res=1)
 
-	elif exponente > 1:
+	elif exponente >= 1:
 		resultado=base**exponente
-		return render_template("pag_calc_potencia.html",bas=base,expo=exponente,res=resultado)
+		return render_template("template1.html",bas=base,expo=exponente,res=resultado)
 
 	else:
 		abort(404)
@@ -56,7 +75,7 @@ def calculo_ejemplo_potencias(base):
 	except:
 		abort(404)
 
-	return render_template("pag_ej_potencias.html",lista=lista,base=base)
+	return render_template("template2.html",lista=lista,base=base)
 
 ## Calcula cuantas letras hay en una palabra (URL).
 @app.route('/cuenta/<palabra>/<caracter>')
@@ -67,7 +86,7 @@ def cuenta_letras(palabra,caracter):
 
 	else:
 		num_car=palabra.count(caracter)
-		return render_template("pag_calc_nletras.html",palabra=palabra,caracter=caracter,ncaracteres=num_car)
+		return render_template("template3.html",palabra=palabra,caracter=caracter,ncaracteres=num_car)
 
 ## Calculador de multiples cosas para las palabras (boton).
 @app.route('/cuentamultiple',methods=["POST"])
@@ -138,57 +157,84 @@ def calc_mul_pal():
 		if len(consonantes) == 0:
 			if len(numeros) == 0 and len(car_especial)!=0:
 				## nce -> numero de caracteres especiales //  lce -> lista caracteres especiales
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial)
 			elif len(car_especial) == 0 and len(numeros) != 0:
 				## nn -> numero de numeros //  lnum -> lista de numeros
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nn=len(numeros),lnum=l_numeros)
 			else:
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
 		else:
 			if len(numeros) == 0 and len(car_especial)!=0:
 					## nce -> numero de caracteres especiales //  lce -> lista caracteres especiales // ncon -> numero de consonantes // lcon -> lista de consonantes
-					return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial)
+					return render_template("template4.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial)
 			elif len(car_especial) == 0 and len(numeros) != 0:
 				## nn -> numero de numeros //  lnum -> lista de numeros
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes,nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes,nn=len(numeros),lnum=l_numeros)
 			elif len(car_especial) != 0 and len(numeros) != 0:
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
 			else:
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),ncon=len(consonantes),lcon=l_consonantes)
 
 	elif len(consonantes) == 0:
 		if len(vocales) == 0:
 			if len(numeros) == 0 and len(car_especial)!=0:
 				## nce -> numero de caracteres especiales //  lce -> lista caracteres especiales
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial)
 			elif len(car_especial) == 0 and len(numeros) != 0:
 				## nn -> numero de numeros //  lnum -> lista de numeros
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nn=len(numeros),lnum=l_numeros)
 			else:
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
 		else:
 			if len(numeros) == 0 and len(car_especial)!=0:
 					## nce -> numero de caracteres especiales //  lce -> lista caracteres especiales nvoc -> numero de vocales // lvoc -> lista de vocales
-					return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,nce=len(car_especial),lce=l_carespecial)
+					return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,nce=len(car_especial),lce=l_carespecial)
 			elif len(car_especial) == 0 and len(numeros) != 0:
 				## nn -> numero de numeros //  lnum -> lista de numeros
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,nn=len(numeros),lnum=l_numeros)
 			elif len(car_especial) != 0 and len(numeros) != 0:
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
 			else:
-				return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales)
+				return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales)
 				
 	else:
 		if len(numeros) == 0 and len(car_especial)!=0:
 			## nce -> numero de caracteres especiales //  lce -> lista caracteres especiales nvoc -> numero de vocales // lvoc -> lista de vocales
-			return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial)
+			return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial)
 		elif len(car_especial) == 0 and len(numeros) != 0:
 			## nn -> numero de numeros //  lnum -> lista de numeros
-			return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nn=len(numeros),lnum=l_numeros)
+			return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nn=len(numeros),lnum=l_numeros)
 		else:
-			return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
+			return render_template("template4.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
 
-#
+## Buscar los libros a traves de la URL
+@app.route('/libro/<int:codigo>')
+def buscar_libro_por_cod(codigo):
+	
+	cod_libros=[]
+	## Lcl -> lista codigo de libros
+	lcl=[]
+
+	## cl -> codigo libro
+	for cl in doc.xpath('//codigo/text()'):
+		dic={"codigo":int(cl)}
+		lcl.append(dic)
+		cod_libros.append(int(cl))
+	
+	if codigo not in cod_libros:
+		abort(404)
+	else:
+		return render_template("template5.html",cod=codigo,autor=doc.xpath('//libro[codigo=%i]/autor/text()'%(codigo))[0],titulo=doc.xpath('//libro[codigo=%i]/titulo/text()'%(codigo))[0])
+
+## Buscar los libros a traves de la pag web.
+@app.route('/libreria/<codigo>')
+def ejemplos_libros(codigo):
+	
+	codigo=int(codigo)
+	autor=doc.xpath('//libro[codigo=%i]/autor/text()'%(codigo))[0]
+	titulo=doc.xpath('//libro[codigo=%i]/titulo/text()'%(codigo))[0]
+	
+	return render_template("template7.html",cod=codigo,autor=autor,titulo=titulo)
 
 
 
