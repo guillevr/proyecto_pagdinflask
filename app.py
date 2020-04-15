@@ -188,7 +188,7 @@ def calc_mul_pal():
 		else:
 			return render_template("pag_ej_calcletras.html",palabra=palabra,long_pal=len(palabra),nvoc=len(vocales),lvoc=l_vocales,ncon=len(consonantes),lcon=l_consonantes,nce=len(car_especial),lce=l_carespecial,nn=len(numeros),lnum=l_numeros)
 
-
+#
 
 
 
