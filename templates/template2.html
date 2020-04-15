@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+	<title>Páginas de ejemplos de potencias.</title>
+	<style type="text/css">
+		body {margin-left: 5;}
+	</style>
+</head>
+<body>
+	<header>
+		<br/>
+        {%if not base%}
+            <h2>Ejemplos de cálculo de las primeras 20 potencias de los primeros 10 nímeros.</h2>
+            {% for base in range(1,11) -%}
+                <a href="/potencia/{{base}}">Cálculo de potencias del número {{base}}.</a><br/>
+            {% endfor -%}
+        {% else %}
+            <h2>Cálculo de potencias del número {{base}}.</h2>
+            {% for num in lista-%}
+                <p>{{base}}^{{num.exponente}} = {{num.resultado}}</p>
+            {% endfor -%}
+            <br/>
+            <a href="/pag_ej_potencias" >Volver a la página de cálculos de potencias.</a>
+        {% endif %}
+        <br/>
+        <br/>
+        <a href="/" >Volver a la página principal.</a>
+    </header>
+</body>
+</html>

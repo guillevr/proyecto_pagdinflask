@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}Páginas de ejemplos de cálculo de letras.{% endblock %}
+{% block content %}
+    <br/>
+    {%if not palabra%}
+        <h2>Introduzca una palabra:</h2>
+        <form action="/cuentamultiple" method="post">
+            <input type="text" name="palabra" required/>
+            <input type="submit" value="Enviar"/>
+        </form>
+    {% else %}
+        <h2>El contador múltiple.</h2>
+        <p><u>(Los caracteres repetidos solo se montrarán una vez)</u></p>
+        <p>Información sobre la palabra <strong>{{palabra}}</strong>:</p>
+        <br/>
+        <br/>
+
+        {%if not nvoc%}
+            {%if not ncon%}
+                {%if not nn%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Todos los caracteres introducidos son <strong>caracteres especiales</strong>.</p>
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}.</strong></p>
+                {%elif not nce%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Todos los caracteres introducidos son <strong>números</strong>.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}.</strong></p>
+                {%else%} 
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Solo se han introducido números y caracteres especiales.</p>
+                    <p>Se han introducido <strong>{{nn}}</strong> números y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p> 
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>                       
+                {% endif %}
+            {%else%}
+                {%if not nn and not nce%} 
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Todos los caracteres introducidos son <strong>consonantes</strong>.</p>
+                    <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}.</strong></p>
+                {%elif not nn%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Los caracteres introducidos son consonantes y caracteres especiales.</p>
+                    <p>Se han introducido <strong>{{ncon}}</strong> consonantes y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                    <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>
+                {%elif not nce%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Los caracteres introducidos son consonantes y números.</p>
+                    <p>Se han introducido <strong>{{ncon}}</strong> consonantes y <strong>{{nn}}</strong> números distintos.</p>
+                    <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p>
+
+                {%else%} 
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Los caracteres introducido son consonantes, números y caracteres especiales.</p>
+                    <p>Se han introducido <strong>{{ncon}}</strong> consonantes, <strong>{{nn}}</strong> números y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                    <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p> 
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>
+                          
+                {% endif %}
+            {% endif %}
+        {%elif not ncon%}
+            {%if not nvoc%}
+                {%if not nn%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Todos los caracteres introducidos son <strong>caracteres especiales</strong>.</p>
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}.</strong></p>
+                {%elif not nce%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Todos los caracteres introducidos son <strong>números</strong>.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}.</strong></p>
+                {%else%} 
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Solo se han introducido números y caracteres especiales.</p>
+                    <p>Se han introducido <strong>{{nn}}</strong> números y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p> 
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>                          
+                {% endif %}
+            {%else%}
+                {%if not nn and not nce%} 
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Todos los caracteres introducidos son <strong>vocales</strong>.</p>
+                    <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}.</strong></p>
+                {%elif not nn%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Los caracteres introducidos son vocales y caracteres especiales.</p>
+                    <p>Se han introducido <strong>{{nvoc}}</strong> vocales y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                    <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}</strong>.</p>
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>
+                {%elif not nce%}
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Los caracteres introducidos son vocales y números.</p>
+                    <p>Se han introducido <strong>{{nvoc}}</strong> vocales y <strong>{{nn}}</strong> números distintos.</p>
+                    <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}</strong>.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p>
+                {%else%} 
+                    <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                    <p>Los caracteres introducido son vocales, números y caracteres especiales.</p>
+                    <p>Se han introducido <strong>{{nvoc}}</strong> vocales, <strong>{{nn}}</strong> números y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                    <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}</strong>.</p>
+                    <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p> 
+                    <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            {%if not nn and not nce%} 
+                <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                <p>Los caracteres introducidos son <strong>vocales</strong> y <strong>consonantes</strong>.</p>
+                <p>Se han introducido <strong>{{nvoc}}</strong> vocales y <strong>{{ncon}}</strong> consonantes distintas.</p>
+                <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}.</strong></p>
+                <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+            {%elif not nn%}
+                <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                <p>Los caracteres introducido son vocales, consonantes y caracteres especiales.</p>
+                <p>Se han introducido <strong>{{nvoc}}</strong> vocales, <strong>{{ncon}}</strong> consonantes y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}</strong>.</p>
+                <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+                <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>
+            {%elif not nce%}
+                <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                <p>Los caracteres introducido son vocales, consonantes y caracteres especiales.</p>
+                <p>Se han introducido <strong>{{nvoc}}</strong> vocales, <strong>{{ncon}}</strong> consonantes y <strong>{{nn}}</strong> números distintos.</p>
+                <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}</strong>.</p>
+                <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+                <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p>
+            {%else%} 
+                <p>Tiene una longitud de <strong>{{long_pal}}</strong> caracteres.</p>
+                <p>Los caracteres introducido son vocales, consonantes, números y caracteres especiales.</p>
+                <p>Se han introducido <strong>{{nvoc}}</strong> vocales, <strong>{{ncon}}</strong> consonantes, <strong>{{nn}}</strong> números y <strong>{{nce}}</strong> caracteres especiales distintos.</p>
+                <p>Las vocales introducidas sin contar las repetidas son: <strong>{{lvoc}}</strong>.</p>
+                <p>Las consonantes introducidas sin contar las repetidas son: <strong>{{lcon}}</strong>.</p>
+                <p>Los números introducidos sin contar los repetidos son: <strong>{{lnum}}</strong>.</p> 
+                <p>Los caracteres especiales introducidos sin contar los repetidos son: <strong>{{lce}}</strong>.</p>
+            {% endif %}
+        {% endif %}
+        <br/>
+        <br/>
+        <a href="/pag_ej_calcletras" >Volver a introducir otra palabra.</a>
+    {% endif %}
+
+
+    <br/>
+    <br/>
+    <br/>
+    <a href="/" >Volver a la página principal.</a>
+{% endblock %}

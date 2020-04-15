@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Biblioteca{% endblock %}
+{% block content %}
+    {%if lista_libros%}
+        <h2>Código de libros disponibles.</h2>
+        <ul>
+            {% for libro in lista_libros-%}
+                <li><a href="/libreria/{{libro.codigo}}">{{libro.codigo}}</a></li>
+            {% endfor -%}
+        </ul>    
+    {%else%}
+        <p>No hay existencias de libros en esta libreria.</p>
+    {% endif %}
+    <br/>
+    <br/>
+    <a href="/" >Volver a la página principal.</a>
+{% endblock %}
