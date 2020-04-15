@@ -21,5 +21,44 @@ def pag_ej_potencias():
 def pag_ej_calcletras():
 	return render_template("pag_ej_calcletras.html")
 
+## Calcula la potencia escrita en la (URL).
+@app.route('/potencia/<int:base>/<exponente>')
+def calculo_potencias(base,exponente):
+
+	exponente=int(exponente)
+
+	if exponente < 0:
+		resultado= 1 / base ** abs(exponente)
+		return render_template("pag_calc_potencia.html",bas=base,expo=abs(exponente),res=resultado)
+
+	elif exponente == 0:
+		return render_template("pag_calc_potencia.html",bas=base,expo=exponente,res=1)
+
+	elif exponente > 1:
+		resultado=base**exponente
+		return render_template("pag_calc_potencia.html",bas=base,expo=exponente,res=resultado)
+
+	else:
+		abort(404)
+
+## Calcula la potencia del numero indicado en la pagina de los ejemplos de las potencias.
+@app.route('/potencia/<base>')
+def calculo_ejemplo_potencias(base):
+
+	try:
+		lista=[]
+		base=int(base)
+
+		for i in range (0,21):
+			dic={"exponente":i,"resultado":base**i}
+			lista.append(dic)
+
+	except:
+		abort(404)
+
+	return render_template("pag_ej_potencias.html",lista=lista,base=base)
+
+
+
 
 app.run(debug=True)
